@@ -1,5 +1,6 @@
 package com.example.security.infrastructure.adapter.input.rest;
 
+import com.example.security.domain.exception.InvalidCredentialsException;
 import com.example.security.domain.exception.InvalidRoleException;
 import com.example.security.domain.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleUserAlreadyExists(UserAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(Map.of("error", ex.getMessage()));
     }
 

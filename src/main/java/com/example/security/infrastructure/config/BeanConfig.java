@@ -1,6 +1,8 @@
 package com.example.security.infrastructure.config;
 
+import com.example.security.application.usecase.LoginUserUseCase;
 import com.example.security.application.usecase.RegisterUserUseCase;
+import com.example.security.domain.port.input.LoginUserPort;
 import com.example.security.domain.port.input.RegisterUserPort;
 import com.example.security.domain.port.output.*;
 import org.springframework.context.annotation.Bean;
@@ -20,5 +22,14 @@ public class BeanConfig {
             TokenGeneratorPort tokenGenerator,
             PasswordEncoderPort passwordEncoder) {
         return new RegisterUserUseCase(userRepository, tokenRepository, tokenGenerator, passwordEncoder);
+    }
+
+    @Bean
+    public LoginUserPort loginUserPort(
+            UserRepositoryPort userRepository,
+            TokenRepositoryPort tokenRepository,
+            TokenGeneratorPort tokenGenerator,
+            PasswordEncoderPort passwordEncoder) {
+        return new LoginUserUseCase(userRepository, tokenRepository, tokenGenerator, passwordEncoder);
     }
 }
