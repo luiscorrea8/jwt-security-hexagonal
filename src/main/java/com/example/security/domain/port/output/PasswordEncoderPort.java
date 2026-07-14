@@ -6,4 +6,3 @@ public interface PasswordEncoderPort {
     Password encode(Password plainPassword);
     boolean matches(Password plainPassword, Password hashedPassword);
 }
-

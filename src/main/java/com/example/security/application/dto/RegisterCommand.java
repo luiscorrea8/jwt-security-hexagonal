@@ -1,5 +1,6 @@
 package com.example.security.application.dto;
 
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,4 +14,5 @@ public class RegisterCommand {
     private String email;
     private String password;
     private String role;
+
 }

@@ -1,6 +1,5 @@
 package com.example.security.infrastructure.adapter.input.rest.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record TokenResponseDto(

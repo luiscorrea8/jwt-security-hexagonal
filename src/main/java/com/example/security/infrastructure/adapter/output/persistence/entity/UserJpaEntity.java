@@ -1,6 +1,5 @@
 package com.example.security.infrastructure.adapter.output.persistence.entity;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -25,4 +24,3 @@ public class UserJpaEntity {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 }
-

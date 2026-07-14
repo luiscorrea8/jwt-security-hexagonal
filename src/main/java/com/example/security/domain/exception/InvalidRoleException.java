@@ -10,3 +10,4 @@ public class InvalidRoleException extends RuntimeException {
 
     public String getRole() { return role; }
 }
+

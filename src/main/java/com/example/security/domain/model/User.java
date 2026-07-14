@@ -1,6 +1,7 @@
 package com.example.security.domain.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ public class User {
     private final Email email;
     private final Password password;
     private final Role role;
+    private final List<String> scopes;
 
     private User(Builder builder) {
         this.id = builder.id;
@@ -17,6 +19,14 @@ public class User {
         this.email = builder.email;
         this.password = builder.password;
         this.role = builder.role;
+        this.scopes = calculateScopes(builder.role);
+    }
+
+    private static List<String> calculateScopes(Role role) {
+        if (role == null) return List.of();
+        List<String> calculatedScopes = new ArrayList<>();
+        role.getPermissions().forEach(p -> calculatedScopes.add(p.getScope()));
+        return Collections.unmodifiableList(calculatedScopes);
     }
 
     public Long getId() { return id; }
@@ -26,9 +36,6 @@ public class User {
     public Role getRole() { return role; }
 
     public List<String> getScopes() {
-        if (role == null) return List.of();
-        List<String> scopes = new ArrayList<>();
-        role.getPermissions().forEach(p -> scopes.add(p.getScope()));
         return scopes;
     }
 

@@ -1,6 +1,5 @@
 package com.example.security.domain.port.output;
 
-
 import com.example.security.domain.model.User;
 
 public interface TokenGeneratorPort {
@@ -9,4 +8,3 @@ public interface TokenGeneratorPort {
     long getAccessTokenExpirationSeconds();
     long getRefreshTokenExpirationSeconds();
 }
-

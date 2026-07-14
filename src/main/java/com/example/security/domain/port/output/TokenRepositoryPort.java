@@ -1,6 +1,5 @@
 package com.example.security.domain.port.output;
 
-
 import com.example.security.domain.model.Token;
 import java.util.List;
 

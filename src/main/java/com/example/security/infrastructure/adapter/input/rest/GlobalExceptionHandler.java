@@ -19,14 +19,8 @@ public class GlobalExceptionHandler {
             .body(Map.of("error", ex.getMessage()));
     }
 
-    @ExceptionHandler(InvalidRoleException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidRole(InvalidRoleException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(Map.of("error", ex.getMessage()));
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+    @ExceptionHandler({InvalidRoleException.class, IllegalArgumentException.class})
+    public ResponseEntity<Map<String, String>> handleBadRequestExceptions(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(Map.of("error", ex.getMessage()));
     }
@@ -39,4 +33,3 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 }
-

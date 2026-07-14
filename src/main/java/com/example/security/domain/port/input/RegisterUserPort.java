@@ -6,4 +6,3 @@ import com.example.security.application.dto.TokenResult;
 public interface RegisterUserPort {
     TokenResult register(RegisterCommand command);
 }
-
