@@ -1,143 +1,32 @@
 server:
   port: 9100
 
-application:
-  security:
-    jwt:
-      #secret-key: mi clave es muy segura 123456789 ABCabc
-      secret-key: bWkgY2xhdmUgZXMgbXV5IHNlZ3VyYSAxMjM0NTY3ODkgQUJDYWJj
-      #expiration: 86400000 # a day (1000 * 60 * 60 * 24)
-      expiration: 60000 # a min (1000 * 60)
-      refresh-token:
-        expiration: 604800000 # a week (1000 * 60 * 60 * 24 * 7)
-      
-      # Configuración de validación JWT avanzada
-      validation:
-        header-name: Authorization
-        failed-validation-httpcode: 403
-        
-        # Configuración OpenID Connect (opcional para Azure AD / Microsoft)
-        openid-config:
-          enabled: false
-          url: https://login.microsoftonline.com/{tenant}/.well-known/openid-configuration
-        
-        # Audiencias permitidas
-        audiences:
-          - api://my-api
-          - api://my-backend
-        
-        # Claims requeridos con validación
-        required-claims:
-          # Validar roles (match: any - al menos uno debe coincidir)
-          roles:
-            match: any
-            values:
-              - ADMIN
-              - EDITOR
-
-          # Validar scopes/permisos (match: all - todos deben estar presentes)
-          scopes:
-            match: all
-            values:
-              - READ
-              - WRITE
-          
-          # Validar claim personalizado department (match: any)
-          department:
-            match: any
-            values:
-              - IT
-              - Finance
-              - Engineering
-              - Sales
-
-# H2 Database Configuration
 spring:
+  application:
+    name: jwt-security-hexagonal
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:securitydb
     driver-class-name: org.h2.Driver
     username: sa
-    password: Femero1978
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
     show-sql: true
-    defer-datasource-initialization: true
-  application:
-    name: jwt-spring-security
-
-# Configuración de SpringDoc OpenAPI
-springdoc:
-  show-actuator: true
-  use-management-port: false
-
-# Configuración de Distributed Tracing
-tracing:
-  enabled: true
-
-# OpenTelemetry Configuration
-otel:
-  service:
-    name: jwt-spring-security
-  exporter:
-    otlp:
-      endpoint: http://localhost:4318
-      protocol: http/protobuf
-  traces:
-    sampler:
-      probability: 1.0
-  metrics:
-    exporter: none
-  logs:
-    exporter: none
-
-# Configuración de Actuator+Métricas+Micrometer Tracing
-# Management endpoints con tracing
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-      base-path: /actuator
-    enabled-by-default: true
-  endpoint:
-    health:
-      show-details: always
+  h2:
+    console:
       enabled: true
-    prometheus:
-      enabled: true
-    metrics:
-      enabled: true
-    info:
-      enabled: true
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-    enable:
-      jvm: true
-      process: true
-      system: true
-  tracing:
-    enabled: true
-    sampling:
-      probability: 1.0
-    baggage:
-      enabled: true
-      correlation:
-        enabled: true
-      remote-fields:
-        - X-Trace-Id
-        - X-User-Id
-        - X-Request-Id
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces
-  server:
-    add-application-context-header: false
+      path: /h2-console
 
+application:
+  security:
+    jwt:
+      secret-key: bWkgY2xhdmUgc2VjcmV0YSBwYXJhIGp3dCBkZWJlIHNlciBtdXkgbGFyZ2E=
+      expiration: 3600000
+      refresh-token:
+        expiration: 604800000
+
+logging:
+  level:
+    com.example.security: DEBUG
