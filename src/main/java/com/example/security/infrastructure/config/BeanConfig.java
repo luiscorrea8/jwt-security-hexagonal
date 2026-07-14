@@ -1,0 +1,24 @@
+package com.example.security.infrastructure.config;
+
+import com.example.security.application.usecase.RegisterUserUseCase;
+import com.example.security.domain.port.input.RegisterUserPort;
+import com.example.security.domain.port.output.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+public class BeanConfig {
+    @Bean
+    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+
+    @Bean
+    public RegisterUserPort registerUserPort(
+            UserRepositoryPort userRepository,
+            TokenRepositoryPort tokenRepository,
+            TokenGeneratorPort tokenGenerator,
+            PasswordEncoderPort passwordEncoder) {
+        return new RegisterUserUseCase(userRepository, tokenRepository, tokenGenerator, passwordEncoder);
+    }
+}
